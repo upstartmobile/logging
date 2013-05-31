@@ -16,10 +16,11 @@ module Logging::Layouts
   # Factory for the Parseable layout using YAML formatting.
   #
   def self.yaml( *args )
+    raise "YAML LAYOUTS DEPRECATED"
     ::Logging::Layouts::Parseable.yaml(*args)
   end
 
-  # This layout will produce parseable log output in either JSON or YAML
+  # This layout will produce parseable log output in either JSON or YAML [deprecated]
   # format. This makes it much easier for machines to parse log files and
   # perform analysis on those logs.
   #
@@ -58,6 +59,7 @@ module Logging::Layouts
   # events is configured to generate tracing information. If this is not the
   # case these fields will always be empty.
   #
+  # [DEPRECATED]
   # When configured to output log events in YAML format, each log message
   # will be formatted as a hash in it's own YAML document. The hash keys are
   # the name of the item, and the value is what you would expect it to be.
@@ -103,7 +105,7 @@ module Logging::Layouts
       'file'      => 'event.file'.freeze,
       'line'      => 'event.line'.freeze,
       'method'    => 'event.method'.freeze,
-      'hostname'  => '`hostname`.chomp'.freeze,
+      'hostname'  => 'Socket.gethostname'.freeze,
       'pid'       => 'Process.pid'.freeze,
       'millis'    => 'Integer((event.time-@created_at)*1000)'.freeze,
       'thread_id' => 'Thread.current.object_id'.freeze,
@@ -119,6 +121,7 @@ module Logging::Layouts
     # _layout_ based on the configured items for the layout instance.
     #
     def self.create_yaml_format_method( layout )
+      raise "YAML LAYOUTS DEPRECATED"
       code = "undef :format if method_defined? :format\n"
       code << "def format( event )\nstr = {\n"
 
@@ -167,6 +170,7 @@ module Logging::Layouts
     # formatting. See the initializer documentation for available options.
     #
     def self.yaml( opts = {} )
+      raise "YAML LAYOUTS DEPRECATED"
       opts[:style] = 'yaml'
       new(opts)
     end

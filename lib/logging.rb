@@ -4,7 +4,7 @@
 unless defined? Logging
 
 require File.expand_path('../logging/utils', __FILE__)
-
+require 'socket'
 require 'yaml'
 require 'stringio'
 require 'fileutils'
