@@ -96,7 +96,9 @@ module Logging::Appenders
       @ident = opts.getopt(:ident, name)
       @logopt = opts.getopt(:logopt, (LOG_PID | LOG_CONS), :as => Integer)
       @facility = opts.getopt(:facility, LOG_USER, :as => Integer)
-      @syslog = ::Syslog.open(@ident, @logopt, @facility)
+      @syslog = ::Syslog.opened? ?
+          ::Syslog.reopen(@ident, @logopt, @facility) :
+          ::Syslog.open(@ident, @logopt, @facility)
 
       # provides a mapping from the default Logging levels
       # to the syslog levels
